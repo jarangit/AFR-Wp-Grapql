@@ -3,15 +3,12 @@ import styled from 'styled-components'
 import { Link } from 'gatsby'
 
 class ProductItem extends Component {
-    //ทดสอบ Git
     render(){
         //Style
         const Img = styled.img`
             max-width: 325px;
             width: 100%;
         `
-
-
         //Fucntion
         const { name, slug, id, regularPrice, image, productCategories } = this.props.products
         const url = productCategories.nodes.map(catProduct=>{

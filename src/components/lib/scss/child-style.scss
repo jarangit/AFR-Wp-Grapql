@@ -1,0 +1,59 @@
+@import "compass/css3";
+@import "compass/reset";
+@import "compass/support";
+@import "simple-grid";
+@import "awesomplete";
+@import "var";
+@import "light";
+@import "pack";
+@import url('https://fonts.googleapis.com/css?family=Prompt:300,400,600,900');
+
+
+body {
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p,
+  li,
+  a,
+  span,
+  select,
+  option,
+  input,
+  textarea,
+  label,
+  div {
+    font-family: $headfont;
+    letter-spacing: 1px;
+
+    @include respon(max, 768) {
+      letter-spacing: 0px;
+    }
+  }
+}
+
+%newline-space {
+  margin-bottom: 30px;
+}
+
+%translate-center {
+  transform: translate(-50%, -50%);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+
+.demo_store {
+    background-color: #6c9d91 !important;
+}
+
+
+@media only screen and (max-width: 769px) {
+  .demo_store {
+    font-size: 0.8em !important;
+  }
+} 

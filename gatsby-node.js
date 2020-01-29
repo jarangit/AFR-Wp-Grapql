@@ -90,21 +90,38 @@ exports.createPages = ({ graphql, actions }) => {
                     name
                     slug
                     regularPrice
-                    productCategories{
-                      nodes{
+                    productCategories {
+                      nodes {
                         slug
                       }
                     }
-                    }
-                    image {
-                      altText
-                      mediaItemUrl
-                    }
+                  }
+                  image {
+                    altText
+                    mediaItemUrl
+                  }
+                }
+              }
+              children(first: 20) {
+                nodes {
+                  id
+                  name
+                  slug
+                  description
+                  image {
+                    altText
+                    mediaItemUrl
+                  }
+                  parent {
+                    name
+                    id
+                    slug
                   }
                 }
               }
             }
           }
+        }
         wordPress {
           products(first: 500) {
             nodes {
@@ -182,26 +199,39 @@ exports.createPages = ({ graphql, actions }) => {
           const ProducCatTemplate = path.resolve(`src/templates/Product-Category.js`)
           result.data.wordPress.productCategories.nodes.forEach(edge => {
 
-            const deCode = decodeURI(edge.slug);
+            const deCodeMain = decodeURI(edge.slug);
             createPage({
-              path: '/หมวดสินค้า/'+deCode,
+              path: '/หมวดสินค้า/'+deCodeMain,
               component: ProducCatTemplate,
               context: edge,
             })
+            // const ProducCatChilTemplate = path.resolve(`src/templates/Product-Category-children.js`)
+            // result.data.wordPress.productCategories.nodes.forEach(edge => {
+              edge.children.nodes.map(edgeChill=>{
+  
+                const deCodeChil = decodeURI(edgeChill.slug);
+                createPage({
+                  path: '/หมวดสินค้า/'+ deCodeMain + '/' + deCodeChil,
+                  component: ProducCatTemplate,
+                  context: edgeChill,
+                })
+              })
+            // })
           })
+
       
           //SingleProduct
-          const ProductSingleTemplate = path.resolve(`src/templates/Product-Single.js`)
-          result.data.wordPress.products.nodes.forEach(edge => {
-            edge.productCategories.nodes.map(catProduct=> {
-              const deCode = decodeURI(catProduct.slug + '/' + edge.slug);
-              createPage({
-                path: deCode,
-                component: ProductSingleTemplate,
-                context: edge,
-              })
-            }) 
-          })
+          // const ProductSingleTemplate = path.resolve(`src/templates/Product-Single.js`)
+          // result.data.wordPress.products.nodes.forEach(edge => {
+          //   edge.productCategories.nodes.map(catProduct=> {
+          //     const deCode = decodeURI(catProduct.slug + '/' + edge.slug);
+          //     createPage({
+          //       path: deCode,
+          //       component: ProductSingleTemplate,
+          //       context: edge,
+          //     })
+          //   }) 
+          // })
       
 
       })

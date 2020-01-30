@@ -66,7 +66,7 @@ const ProducCatTemplate = (data) => {
             {checkSlugPage()}
             <div> <img src={image.mediaItemUrl} /> </div>
                 {/* <TestGrid id="pc"> {showProduct()}</TestGrid> */}
-            <div> <BlockCat children = {children}/> </div>
+            <div> <BlockCat /> </div>
             {/* <div> <ProductList products = {products} /> </div> */}
         </Layout>
     )

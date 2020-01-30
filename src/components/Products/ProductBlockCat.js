@@ -1,44 +1,38 @@
 import React from 'react'
 import { graphql, StaticQuery } from 'gatsby'
+import gql from 'graphql-tag'
+import { useQuery } from "@apollo/react-hooks";
 
-const BlockCat = () => {
-    const test = "กระเช้าดอกไม้"
-    return(
-        <StaticQuery query={graphql`
-            query MyQuery {
+const QUERY_PRODUCTCAT = gql`
+  query MyQuery ($slug: [String]) {
   wordPress {
-    productCategories(where: {name: "กระเช้าดอกไม้"}) {
+    productCategories(where: {slug: $slug}) {
       nodes {
-        children {
-          nodes {
-            name
-            parent {
-              name
-            }
-          }
-        }
+        name
       }
     }
   }
 }
-        `} render = {props => {
-            return(
-                <div>
-                    { props.wordPress.productCategories.nodes.map(edge=>{
-                       return(
-                           <di>
-                               { edge.children.nodes.map(chil=>{
-                            return(
-                                <div> {chil.name} </div>
-                                )
-                                })}
-                           </di>
-                       )
-                    })}
-                </div>
-            )
-        }} />
-    )
+
+`
+const BlockCat = (props) => {
+  // console.log(props.parentSlug)
+  const parentSlug = decodeURI(props.parentSlug)
+  console.log(parentSlug)
+  const {data} = useQuery(QUERY_PRODUCTCAT, {variables:{slug: parentSlug}});
+  console.log(data)
+
+
+  return(
+    <div>
+      this block
+     {/* {data.wordPress.productCategories.nodes.map(edge=> {
+       return(
+         <div> {edge.name} </div>
+       )
+     })} */}
+   </div>
+ )
 }
 
 export default BlockCat;
